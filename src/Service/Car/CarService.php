@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace app\Service;
+namespace app\Service\Car;
 
 use app\DTO\CarListResult;
 use app\DTO\CreateCar;
@@ -10,8 +10,9 @@ use app\Entity\Car;
 use app\Entity\CarOption;
 use app\Mapper\Entity\CarMapper;
 use app\Mapper\Entity\CarOptionMapper;
-use app\Repository\CarOptionRepositoryInterface;
-use app\Repository\CarRepositoryInterface;
+use app\Repository\Car\CarRepositoryInterface;
+use app\Repository\CarOption\CarOptionRepositoryInterface;
+use app\Service\Transaction\TransactionManagerInterface;
 use Yii;
 
 readonly class CarService implements CarServiceInterface
@@ -21,14 +22,14 @@ readonly class CarService implements CarServiceInterface
         private CarOptionRepositoryInterface $carOptionRepository,
         private CarMapper                    $carMapper,
         private CarOptionMapper              $optionMapper,
+        private TransactionManagerInterface  $txManager,
     )
     {
     }
 
     public function create(CreateCar $carDTO, ?CreateCarOption $optionDTO = null): Car
     {
-        $tx = Yii::$app->db->beginTransaction();
-        try {
+        return $this->txManager->transactional(function () use ($carDTO, $optionDTO) {
             $car = new Car(
                 id: null,
                 title: $carDTO->getTitle(),
@@ -59,13 +60,9 @@ readonly class CarService implements CarServiceInterface
                 $carOption = $this->optionMapper->fromActiveRecord($carOptionAr);
                 $car->setOption($carOption);
             }
-            $tx->commit();
 
             return $car;
-        } catch (\Throwable $e) {
-            $tx->rollBack();
-            throw $e;
-        }
+        });
     }
 
     public function findById(int $id): ?Car

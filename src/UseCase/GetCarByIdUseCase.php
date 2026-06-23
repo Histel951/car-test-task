@@ -3,7 +3,7 @@
 namespace app\UseCase;
 
 use app\Mapper\Response\CarResponseMapper;
-use app\Service\CarServiceInterface;
+use app\Service\Car\CarServiceInterface;
 
 readonly class GetCarByIdUseCase
 {

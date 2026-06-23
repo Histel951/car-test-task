@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace app\Repository;
+namespace app\Repository\CarOption;
 
 use app\models\CarOptionAR;
 

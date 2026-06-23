@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Repository;
+namespace app\Repository\Car;
 
 use app\models\CarAR;
 

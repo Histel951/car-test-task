@@ -5,7 +5,7 @@ namespace app\UseCase;
 use app\Mapper\Request\CreateCarOptionRequestMapper;
 use app\Mapper\Request\CreateCarRequestMapper;
 use app\Mapper\Response\CarResponseMapper;
-use app\Service\CarServiceInterface;
+use app\Service\Car\CarServiceInterface;
 
 readonly class CreateCarUseCase
 {

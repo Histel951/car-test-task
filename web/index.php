@@ -12,18 +12,23 @@ require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 $config = require __DIR__ . '/../config/web.php';
 
 Yii::$container->set(
-    \app\Repository\CarRepositoryInterface::class,
-    \app\Repository\CarRepository::class
+    \app\Repository\Car\CarRepositoryInterface::class,
+    \app\Repository\Car\CarRepository::class
 );
 
 Yii::$container->set(
-    \app\Repository\CarOptionRepositoryInterface::class,
-    \app\Repository\CarOptionRepository::class
+    \app\Repository\CarOption\CarOptionRepositoryInterface::class,
+    \app\Repository\CarOption\CarOptionRepository::class
 );
 
 Yii::$container->set(
-    \app\Service\CarServiceInterface::class,
-    \app\Service\CarService::class
+    \app\Service\Car\CarServiceInterface::class,
+    \app\Service\Car\CarService::class
+);
+
+Yii::$container->set(
+    \app\Service\Transaction\TransactionManagerInterface::class,
+    \app\Service\Transaction\YiiTransactionManager::class
 );
 
 

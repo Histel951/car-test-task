@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Service;
+namespace app\Service\Car;
 
 use app\DTO\CarListResult;
 use app\DTO\CreateCar;

@@ -4,7 +4,7 @@ namespace app\UseCase;
 
 use app\Mapper\Response\CarResponseMapper;
 use app\Mapper\Response\ListResponseMapper;
-use app\Service\CarServiceInterface;
+use app\Service\Car\CarServiceInterface;
 
 readonly class GetCarListUseCase
 {

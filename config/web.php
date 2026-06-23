@@ -18,16 +18,16 @@ $config = [
             ],
         ],
         'definitions' => [
-            \app\Repository\CarRepositoryInterface::class => [
-                'class' => \app\Repository\CarRepository::class,
+            \app\Repository\Car\CarRepositoryInterface::class => [
+                'class' => \app\Repository\Car\CarRepository::class,
             ],
 
-            \app\Repository\CarOptionRepositoryInterface::class => [
-                'class' => \app\Repository\CarOptionRepository::class,
+            \app\Repository\CarOption\CarOptionRepositoryInterface::class => [
+                'class' => \app\Repository\CarOption\CarOptionRepository::class,
             ],
 
-            \app\Service\CarServiceInterface::class => [
-                'class' => \app\Service\CarService::class,
+            \app\Service\Car\CarServiceInterface::class => [
+                'class' => \app\Service\Car\CarService::class,
             ],
         ],
     ],
