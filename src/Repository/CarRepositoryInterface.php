@@ -2,12 +2,18 @@
 
 namespace app\Repository;
 
-use app\DTO\CarListResult;
-use app\Entity\Car;
+use app\models\CarAR;
 
 interface CarRepositoryInterface
 {
-    public function save(Car $car): Car;
-    public function findById(int $id): ?Car;
-    public function findAll(int $page, int $limit): CarListResult;
+    public function save(CarAR $car): CarAR;
+    public function findById(int $id): ?CarAR;
+
+    /**
+     * @param int $page
+     * @param int $limit
+     * @return array<CarAR>
+     */
+    public function findAll(int $page, int $limit): array;
+    public function count(): int;
 }

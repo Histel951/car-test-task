@@ -3,37 +3,20 @@ declare(strict_types = 1);
 
 namespace app\Repository;
 
-use app\DTO\CarListResult;
-use app\Entity\Car;
-use app\Mapper\Entity\CarMapper;
-use app\Mapper\Entity\CarOptionMapper;
 use app\models\CarAR;
 
 readonly class CarRepository implements CarRepositoryInterface
 {
-    public function __construct(
-        private CarMapper $mapper,
-        private CarOptionMapper $optionMapper,
-    ) {
-    }
-
-    public function save(Car $car): Car
+    public function save(CarAR $car): CarAR
     {
-        $carAR = new CarAR();
-        $carAR->setAttributes([
-            'title' => $car->getTitle(),
-            'description' => $car->getDescription(),
-            'price' => $car->getPrice(),
-            'photo_url' => $car->getPhotoUrl(),
-            'contacts' => $car->getContacts(),
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
-        $carAR->save();
+        if (!$car->save()) {
+            throw new \RuntimeException('Car save failed');
+        }
 
-        return $this->mapper->fromActiveRecord($carAR);
+        return $car;
     }
 
-    public function findById(int $id): ?Car
+    public function findById(int $id): ?CarAR
     {
         $ar = CarAR::find()
             ->with('option')
@@ -44,48 +27,24 @@ readonly class CarRepository implements CarRepositoryInterface
             return null;
         }
 
-        $car = $this->mapper->fromActiveRecord($ar);
-
-        if (null !== $ar->option) {
-            $car->setOption(
-                $this->optionMapper->fromActiveRecord($ar->option)
-            );
-        }
-
-        return $car;
+        return $ar;
     }
 
-    public function findAll(int $page, int $limit): CarListResult
+    public function findAll(int $page, int $limit): array
     {
         $query = CarAR::find()
             ->with('option');
-
-        $total = (int)$query->count();
 
         $items = $query
             ->offset(($page - 1) * $limit)
             ->limit($limit)
             ->all();
 
-        $cars = [];
+        return $items;
+    }
 
-        foreach ($items as $ar) {
-            $car = $this->mapper->fromActiveRecord($ar);
-
-            if (null !== $ar->option) {
-                $car->setOption(
-                    $this->optionMapper->fromActiveRecord($ar->option)
-                );
-            }
-
-            $cars[] = $car;
-        }
-
-        return new CarListResult(
-            items: $cars,
-            total: $total,
-            page: $page,
-            limit: $limit
-        );
+    public function count(): int
+    {
+        return (int)CarAR::find()->count();
     }
 }

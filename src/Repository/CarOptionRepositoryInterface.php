@@ -2,9 +2,9 @@
 
 namespace app\Repository;
 
-use app\Entity\CarOption;
+use app\models\CarOptionAR;
 
 interface CarOptionRepositoryInterface
 {
-    public function save(CarOption $option): CarOption;
+    public function save(CarOptionAR $option): CarOptionAR;
 }

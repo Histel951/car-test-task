@@ -9,6 +9,21 @@ use app\models\CarOptionAR;
 
 final class CarOptionMapper
 {
+    public function toActiveRecord(CarOption $carOption): CarOptionAR
+    {
+        $carOptionAr = new CarOptionAR();
+        $carOptionAr->setAttributes([
+            'car_id' => $carOption->getCarId(),
+            'brand' => $carOption->getBrand(),
+            'model' => $carOption->getModel(),
+            'year' => $carOption->getYear(),
+            'body' => $carOption->getBody(),
+            'mileage' => $carOption->getMileage(),
+        ]);
+
+        return $carOptionAr;
+    }
+
     public function fromActiveRecord(CarOptionAR $ar): CarOption
     {
         return new CarOption(

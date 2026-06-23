@@ -9,6 +9,8 @@ class CarResponseMapper
 {
     public function toArray(Car $car): array
     {
+        $option = $car->getOption();
+
         return [
             'id' => $car->getId(),
             'title' => $car->getTitle(),
@@ -16,12 +18,12 @@ class CarResponseMapper
             'price' => $car->getPrice(),
             'photo_url' => $car->getPhotoUrl(),
             'contacts' => $car->getContacts(),
-            'options' => $car->getOption() ? [
-                'brand' => $car->getOption()->getBrand(),
-                'model' => $car->getOption()->getModel(),
-                'year' => $car->getOption()->getYear(),
-                'body' => $car->getOption()->getBody(),
-                'mileage' => $car->getOption()->getMileage(),
+            'options' => $option ? [
+                'brand' => $option->getBrand(),
+                'model' => $option->getModel(),
+                'year' => $option->getYear(),
+                'body' => $option->getBody(),
+                'mileage' => $option->getMileage(),
             ] : null,
         ];
     }
