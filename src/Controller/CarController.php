@@ -37,9 +37,6 @@ class CarController extends Controller
         return $behaviors;
     }
 
-    /**
-     * POST /car/create
-     */
     public function actionCreate(): array
     {
         $data = Yii::$app->request->post();
