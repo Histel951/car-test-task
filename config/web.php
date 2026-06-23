@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'controllerNamespace' => 'app\\Controller',
     'container' => [
         'singletons' => [
             \yii\mail\MailerInterface::class => [
@@ -14,6 +15,19 @@ $config = [
                 // send all mails to a file by default.
                 'useFileTransport' => true,
                 'viewPath' => '@app/mail',
+            ],
+        ],
+        'definitions' => [
+            \app\Repository\CarRepositoryInterface::class => [
+                'class' => \app\Repository\CarRepository::class,
+            ],
+
+            \app\Repository\CarOptionRepositoryInterface::class => [
+                'class' => \app\Repository\CarOptionRepository::class,
+            ],
+
+            \app\Service\CarServiceInterface::class => [
+                'class' => \app\Service\CarService::class,
             ],
         ],
     ],
@@ -25,6 +39,7 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '2rNZvgAlMIQkyka-XLkpjJPpgAWZnBjJ',
+            'enableCsrfValidation' => false,
             'parsers' => [
                 'application/json' => yii\web\JsonParser::class,
             ],
@@ -32,10 +47,7 @@ $config = [
         'cache' => [
             'class' => \yii\caching\FileCache::class,
         ],
-        'user' => [
-            'enableSession' => false,
-            'loginUrl' => null,
-        ],
+        'user' => null,
         'response' => [
             'format' => yii\web\Response::FORMAT_JSON,
         ],
@@ -57,12 +69,9 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                [
-                    'class' => yii\rest\UrlRule::class,
-                    'controller' => [
-                        'users',
-                    ],
-                ],
+                'POST car/create' => 'car/create',
+                'GET car/<id:\d+>' => 'car/view',
+                'GET car/list' => 'car/list',
             ],
         ],
     ],
