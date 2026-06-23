@@ -33,8 +33,11 @@ $config = [
             'class' => \yii\caching\FileCache::class,
         ],
         'user' => [
-            'identityClass' => \app\models\User::class,
-            'enableAutoLogin' => true,
+            'enableSession' => false,
+            'loginUrl' => null,
+        ],
+        'response' => [
+            'format' => yii\web\Response::FORMAT_JSON,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -50,14 +53,18 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => yii\rest\UrlRule::class,
+                    'controller' => [
+                        'users',
+                    ],
+                ],
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
