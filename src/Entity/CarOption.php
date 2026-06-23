@@ -27,11 +27,6 @@ final readonly class CarOption
         return $this->carId;
     }
 
-    public function setCarId(int $carId): void
-    {
-        $this->carId = $carId;
-    }
-
     public function getBrand(): string
     {
         return $this->brand;
